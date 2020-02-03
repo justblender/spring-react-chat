@@ -8,6 +8,8 @@ import ChatMessageList from "./components/ChatMessageList";
 const BROKER_URL = "http://localhost:8080/ws";
 const GLOBAL_ROOM = "/rooms/global";
 
+const RECONNECT_DELAY = 3 * 1000;
+
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -23,18 +25,24 @@ export default class App extends React.Component {
   }
 
   createConnection = () => {
-    // Make sure previous connection is closed
-    this.closeConnection();
-
-    // Create new StompJS client
-    this.client = StompJS.over(new SockJS(BROKER_URL));
-    this.client.connect({}, () => {
+    let connectCallback = () => {
       this.client.subscribe(GLOBAL_ROOM, this.handleMessage);
 
       this.setState({
         connected: true
       });
-    });
+    }
+
+    let errorCallback = () => {
+      window.setTimeout(() => this.createConnection(), RECONNECT_DELAY);
+    };
+
+    // Make sure previous connection is closed
+    this.closeConnection();
+
+    // Create new StompJS client
+    this.client = StompJS.over(new SockJS(BROKER_URL));
+    this.client.connect({}, connectCallback, errorCallback);
   }
 
   closeConnection = () => {
