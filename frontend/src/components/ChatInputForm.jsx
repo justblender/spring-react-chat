@@ -46,7 +46,8 @@ export default class ChatInputForm extends React.Component {
         />
 
         <button
-          type="submit">
+          type="submit"
+          disabled={this.props.disabled}>
           Отправить
         </button>
       </form>

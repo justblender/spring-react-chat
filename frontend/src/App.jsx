@@ -13,6 +13,7 @@ export default class App extends React.Component {
     super(props);
 
     this.state = {
+      connected: false,
       messages: []
     };
   }
@@ -27,7 +28,13 @@ export default class App extends React.Component {
 
     // Create new StompJS client
     this.client = StompJS.over(new SockJS(BROKER_URL));
-    this.client.connect({}, () => this.client.subscribe(GLOBAL_ROOM, this.handleMessage));
+    this.client.connect({}, () => {
+      this.client.subscribe(GLOBAL_ROOM, this.handleMessage);
+
+      this.setState({
+        connected: true
+      });
+    });
   }
 
   closeConnection = () => {
@@ -62,8 +69,13 @@ export default class App extends React.Component {
   render() {
     return (
       <div className="app">
+        {!this.state.connected && (
+          <h1>Вы не подключены к веб-сокету!</h1>
+        )}
+
         <ChatInputForm
           onSubmit={this.publishMessage}
+          disabled={!this.state.connected}
         />
 
         <ChatMessageList
