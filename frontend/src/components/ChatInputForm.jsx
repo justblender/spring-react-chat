@@ -12,7 +12,7 @@ export default class ChatInputForm extends React.Component {
 
   handleInputChange = (event) => {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.id]: event.target.value
     });
   }
 
@@ -28,27 +28,39 @@ export default class ChatInputForm extends React.Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <input
-          name="username"
-          type="text"
-          autoFocus={true}
-          required={true}
-          value={this.state.username}
-          onChange={this.handleInputChange}
-        />
+        <div>
+          <label htmlFor="username">
+            Имя пользователя:
+          </label>
 
-        <input
-          name="text"
-          type="text"
-          required={true}
-          value={this.state.text}
-          onChange={this.handleInputChange}
-        />
+          <input
+            id="username"
+            type="text"
+            autoFocus={true}
+            required={true}
+            value={this.state.username}
+            onChange={this.handleInputChange}
+          />
+        </div>
+
+        <div>
+          <label htmlFor="text">
+            Сообщение:
+          </label>
+
+          <input
+            id="text"
+            type="text"
+            required={true}
+            value={this.state.text}
+            onChange={this.handleInputChange}
+          />
+        </div>
 
         <button
           type="submit"
           disabled={this.props.disabled}>
-          Отправить
+          Отправить сообщение
         </button>
       </form>
     );
