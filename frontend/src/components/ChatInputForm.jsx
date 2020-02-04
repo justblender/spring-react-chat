@@ -16,7 +16,7 @@ export default class ChatInputForm extends React.Component {
     this.setState({
       [event.target.id]: event.target.value
     });
-  }
+  };
 
   handleSubmit = (event) => {
     event.preventDefault();
@@ -25,16 +25,13 @@ export default class ChatInputForm extends React.Component {
     this.setState({
       text: ""
     });
-  }
+  };
 
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
         <div>
-          <label htmlFor="username">
-            Имя пользователя:
-          </label>
-
+          <label htmlFor="username">Имя пользователя:</label>
           <input
             id="username"
             type="text"
@@ -46,10 +43,7 @@ export default class ChatInputForm extends React.Component {
         </div>
 
         <div>
-          <label htmlFor="text">
-            Сообщение:
-          </label>
-
+          <label htmlFor="text">Сообщение:</label>
           <input
             id="text"
             type="text"
@@ -59,12 +53,10 @@ export default class ChatInputForm extends React.Component {
           />
         </div>
 
-        <button
-          type="submit"
-          disabled={this.props.disabled}>
+        <button type="submit" disabled={this.props.disabled}>
           Отправить сообщение
         </button>
       </form>
     );
   }
-};
+}

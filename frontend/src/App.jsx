@@ -27,7 +27,7 @@ export default class App extends React.Component {
       this.setState({
         connected: true
       });
-    }
+    };
 
     let errorCallback = () => {
       window.setTimeout(() => this.createConnection(), RECONNECT_DELAY);
@@ -39,7 +39,7 @@ export default class App extends React.Component {
     // Create new StompJS client
     this.client = StompJS.over(new SockJS(BROKER_URL));
     this.client.connect({}, connectCallback, errorCallback);
-  }
+  };
 
   closeConnection = () => {
     if (this.client) {
@@ -50,7 +50,7 @@ export default class App extends React.Component {
     this.setState({
       connected: false
     });
-  }
+  };
 
   handleMessage = (payload) => {
     if (payload.body) {
@@ -58,13 +58,13 @@ export default class App extends React.Component {
         messages: [...prevState.messages, JSON.parse(payload.body)]
       }));
     }
-  }
+  };
 
   publishMessage = (payload) => {
     if (this.client) {
       this.client.send(GLOBAL_ROOM, {}, JSON.stringify(payload));
     }
-  }
+  };
 
   componentWillUnmount() {
     this.closeConnection();
@@ -74,7 +74,9 @@ export default class App extends React.Component {
     return (
       <div className="app">
         {!this.state.connected && (
-          <h1>Вы не подключены к веб-сокету!</h1>
+          <div className="not-connected">
+            <h1>Вы не подключены к веб-сокету!</h1>
+          </div>
         )}
 
         <ChatInputForm
@@ -82,9 +84,7 @@ export default class App extends React.Component {
           disabled={!this.state.connected}
         />
 
-        <ChatMessageList
-          messages={this.state.messages}
-        />
+        <ChatMessageList messages={this.state.messages} />
       </div>
     );
   }
