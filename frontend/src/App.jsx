@@ -6,7 +6,8 @@ import ChatInputForm from "./components/ChatInputForm";
 import ChatMessageList from "./components/ChatMessageList";
 
 const BROKER_URL = "http://localhost:8080/ws";
-const GLOBAL_ROOM = "/rooms/global";
+const GLOBAL_ROOM_TOPIC = "/rooms/global";
+const BROADCAST_ENDPOINT = "/broadcast";
 
 const RECONNECT_DELAY = 3 * 1000;
 
@@ -22,7 +23,7 @@ export default class App extends React.Component {
 
   createConnection = () => {
     let connectCallback = () => {
-      this.client.subscribe(GLOBAL_ROOM, this.handleMessage);
+      this.client.subscribe(GLOBAL_ROOM_TOPIC, this.handleMessage);
 
       this.setState({
         connected: true
@@ -62,7 +63,7 @@ export default class App extends React.Component {
 
   publishMessage = (payload) => {
     if (this.client) {
-      this.client.send(GLOBAL_ROOM, {}, JSON.stringify(payload));
+      this.client.send(BROADCAST_ENDPOINT, {}, JSON.stringify(payload));
     }
   };
 
