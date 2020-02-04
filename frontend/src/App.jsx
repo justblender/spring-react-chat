@@ -11,14 +11,10 @@ const GLOBAL_ROOM = "/rooms/global";
 const RECONNECT_DELAY = 3 * 1000;
 
 export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      connected: false,
-      messages: []
-    };
-  }
+  state = {
+    connected: false,
+    messages: []
+  };
 
   componentDidMount() {
     this.createConnection();

@@ -1,14 +1,16 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 export default class ChatInputForm extends React.Component {
-  constructor(props) {
-    super(props);
+  static propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+    disabled: PropTypes.bool
+  };
 
-    this.state = {
-      username: '',
-      text: ''
-    };
-  }
+  state = {
+    username: "",
+    text: ""
+  };
 
   handleInputChange = (event) => {
     this.setState({
@@ -21,7 +23,7 @@ export default class ChatInputForm extends React.Component {
     this.props.onSubmit(this.state);
 
     this.setState({
-      text: ''
+      text: ""
     });
   }
 
