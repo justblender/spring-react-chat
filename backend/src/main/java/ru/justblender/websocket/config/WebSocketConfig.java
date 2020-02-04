@@ -10,14 +10,17 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
+    public static final String BROKER_PREFIX = "/rooms";
+    public static final String WS_ENDPOINT = "/ws";
+
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/rooms");
+        config.enableSimpleBroker(BROKER_PREFIX);
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/ws").setAllowedOrigins("*").withSockJS();
+        registry.addEndpoint(WS_ENDPOINT).setAllowedOrigins("*").withSockJS();
     }
 
 }
