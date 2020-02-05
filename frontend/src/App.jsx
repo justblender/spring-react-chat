@@ -76,7 +76,7 @@ export default class App extends React.Component {
       <div className="app">
         {!this.state.connected && (
           <div className="not-connected">
-            <h1>Вы не подключены к веб-сокету!</h1>
+            <h1>You're not connected to WS server :(</h1>
           </div>
         )}
 

@@ -31,7 +31,7 @@ export default class ChatInputForm extends React.Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <div>
-          <label htmlFor="username">Имя пользователя:</label>
+          <label htmlFor="username">Username:</label>
           <input
             id="username"
             type="text"
@@ -43,7 +43,7 @@ export default class ChatInputForm extends React.Component {
         </div>
 
         <div>
-          <label htmlFor="text">Сообщение:</label>
+          <label htmlFor="text">Message:</label>
           <input
             id="text"
             type="text"
@@ -53,9 +53,11 @@ export default class ChatInputForm extends React.Component {
           />
         </div>
 
-        <button type="submit" disabled={this.props.disabled}>
-          Отправить сообщение
-        </button>
+        <div>
+          <button type="submit" disabled={this.props.disabled}>
+            Send
+          </button>
+        </div>
       </form>
     );
   }
