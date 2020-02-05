@@ -53,8 +53,8 @@ class WebSocketChatApplicationTests {
         StompSession stompSession = createStompSession();
         assertNotNull(stompSession);
 
-        stompSession.subscribe(WebSocketConfig.BROKER_PREFIX + "/global", stompFrameHandler);
-        stompSession.send("/broadcast", mockMessage);
+        stompSession.subscribe(WebSocketConfig.BROKER_PREFIX + "/public", stompFrameHandler);
+        stompSession.send(WebSocketConfig.ENDPOINT_PREFIX + "/publish", mockMessage);
 
         ChatMessage receivedMessage = messageFuture.get(5, TimeUnit.SECONDS);
         assertEquals(mockMessage, receivedMessage);
@@ -65,7 +65,7 @@ class WebSocketChatApplicationTests {
         stompClient.setMessageConverter(new MappingJackson2MessageConverter());
 
         StompSessionHandlerAdapter sessionHandlerAdapter = new StompSessionHandlerAdapter() {};
-        String webSocketUrl = "http://localhost:" + serverPort + WebSocketConfig.WS_ENDPOINT;
+        String webSocketUrl = "http://localhost:" + serverPort + WebSocketConfig.WS_PATH;
 
         return stompClient.connect(webSocketUrl, sessionHandlerAdapter).get();
     }

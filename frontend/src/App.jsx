@@ -5,11 +5,11 @@ import StompJS from "stompjs";
 import ChatInputForm from "./components/ChatInputForm";
 import ChatMessageList from "./components/ChatMessageList";
 
-const BROKER_URL = "http://localhost:8080/ws";
-const GLOBAL_ROOM_TOPIC = "/rooms/global";
-const BROADCAST_ENDPOINT = "/broadcast";
-
+const WEBSOCKET_URL = "http://localhost:8080/ws";
 const RECONNECT_DELAY = 3 * 1000;
+
+const PUBLIC_TOPIC = "/topic/public";
+const PUBLISH_ENDPOINT = "/chat/publish";
 
 export default class App extends React.Component {
   state = {
@@ -23,7 +23,7 @@ export default class App extends React.Component {
 
   createConnection = () => {
     let connectCallback = () => {
-      this.client.subscribe(GLOBAL_ROOM_TOPIC, this.handleMessage);
+      this.client.subscribe(PUBLIC_TOPIC, this.handleMessage);
 
       this.setState({
         connected: true
@@ -38,7 +38,7 @@ export default class App extends React.Component {
     this.closeConnection();
 
     // Create new StompJS client
-    this.client = StompJS.over(new SockJS(BROKER_URL));
+    this.client = StompJS.over(new SockJS(WEBSOCKET_URL));
     this.client.connect({}, connectCallback, errorCallback);
   };
 
@@ -63,7 +63,7 @@ export default class App extends React.Component {
 
   publishMessage = (payload) => {
     if (this.client) {
-      this.client.send(BROADCAST_ENDPOINT, {}, JSON.stringify(payload));
+      this.client.send(PUBLISH_ENDPOINT, {}, JSON.stringify(payload));
     }
   };
 
