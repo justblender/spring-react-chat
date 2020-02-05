@@ -10,7 +10,7 @@ import ru.justblender.websocket.config.WebSocketConfig;
 import ru.justblender.websocket.model.ChatMessage;
 
 @Controller
-public class ChatRoomController {
+public class WebSocketController {
 
     @MessageMapping("/publish")
     @SendTo(WebSocketConfig.BROKER_PREFIX + "/public")
